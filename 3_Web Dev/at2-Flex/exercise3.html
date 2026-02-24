@@ -5,14 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Exercise3</title>
     <style>
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
         main{
             display: flex;
             justify-content: space-around;
             gap: 20px;
-            font-family: Arial, Helvetica, sans-serif   ;
+            font-family: Arial, Helvetica, sans-serif;
+            flex-wrap: wrap;
+            width: 700px;
         }
         div{
-            width: 250px;
+            width: 230px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -20,11 +27,13 @@
             padding: 30px;
             border: 1px solid #e2e8f0;
             border-radius: 10px;
+            gap: 10px;
+            text-align: center;
+            box-shadow: 0 0 10px #b9b9b9;
         }
-        div:hover{
+        div.card-02{
             border: 1px solid #3b82f6;
-            transform: scale(105%);
-            transition: 500ms;
+            
         }
         h1{
             color: #0f172a;
@@ -37,23 +46,36 @@
             color: #3b82f6;
         }
         span{
-
+            color: #828282;
         }
         button{
             margin: 50px 0px 0px 0px;
+            border: 1px solid black;    
+            border-radius: 5px;
+            padding: 10px 60px;
+            color: #ffff;
+            background-color: #0f172a;
+            font-weight: bold;
+            cursor: pointer;
         }
+        button:hover{
+            text-decoration: underline;
+            background-color: #3b82f6;
+            transition: 500ms;
+        }
+
     </style>
 </head>
 <body>
     <main>
-        <div>
+        <div class="card-01">
             <h1>Básico</h1>
             <h2>$ 9,90/mês</h2>
             <span>Acesso a filmes em qualidade SD (480p). Apenas 1 ecrã em simultâneo. Suporte com anúncios.</span>
             <button>Assinar Básico</button>
         </div>
-        <div>
-            <h1>Padão</h1>
+        <div class="card-02">
+            <h1>Padrão</h1>
             <h2>$ 14,90/mês</h2>
             <span>Filmes em HD (1080p). Até 2 ecrãs em simultâneo. Perfeito para casais ou pequenos grupos. Sem anúncios</span>
             <button>Assinar Padrão</button>
