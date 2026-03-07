@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 int EvenNumbers(int vec[], int vecLenght)
 {
     int EvenCounter = 0;
