@@ -1,4 +1,3 @@
--- Active: 1773080728795@@127.0.0.1@3306@mysql
 -- 1. Estrutura do exercício:
 CREATE DATABASE IF NOT EXISTS escola;
 USE escola;
