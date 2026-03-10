@@ -60,7 +60,7 @@ GRANT DELETE ON escola.alunos TO 'admin_escola';
 SELECT * FROM mysql.role_edges
 WHERE FROM_USER='admin_escola';
 
-SHOW GRANTS FOR 'admin_escola' 
+SHOW GRANTS FOR 'admin_escola';
 
 /*
 6. Problema de Segurança
@@ -74,7 +74,7 @@ SHOW GRANTS FOR 'admin_escola'
 REVOKE INSERT ON escola.* FROM 'acesso_leitura';
 
 
--- Testes
+/* Testes
 SELECT * FROM mysql.role_edges;
 
 DROP DATABASE escola;
@@ -86,3 +86,4 @@ DROP ROLE 'admin_escola';
 DROP USER 'professor'@'localhost';
 DROP USER 'monitor'@'localhost';
 DROP USER 'secretaria'@'%';
+*/
