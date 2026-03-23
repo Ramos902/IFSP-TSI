@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- ANTES: -->
+    <!-- DEPOIS: viewport adicionado para que o layout se adapte corretamente à largura de cada dispositivo -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechBlog - Notícias de Tecnologia</title>
+    <style>
+        /* =========================================================
+       RESET E BASE
+    ========================================================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+        }
+
+        body {
+            background-color: #f8fafc;
+            color: #334155;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        /* =========================================================
+       NAVEGAÇÃO
+    ========================================================= */
+        nav {
+            /*
+            ANTES:
+                height: 64px;
+                padding: 0 40px;
+            DEPOIS:
+                height: auto;
+                padding: 15px 40px;
+                gap: 10px;
+            */
+            height: auto;
+            padding: 15px 40px;
+            gap: 10px;
+
+            background-color: #1e293b;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        /* ANTES:
+            sem media query em telas muito pequenas, logo e links ficavam espremidos lado a lado sem espaço suficiente */
+        /* DEPOIS: 
+            abaixo de 545px, a nav vira coluna e centraliza os itens */
+        @media (max-width: 545px) {
+            nav {
+                justify-content: center;
+                flex-direction: column;
+            }
+        }
+
+        .nav-logo {
+            color: #38bdf8;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            /*
+            ANTES:
+                gap: 32px;
+            DEPOIS:
+                justify-content: center;
+                gap: 10px 32px;
+                flex-wrap: wrap;
+            */
+            justify-content: center;
+            gap: 10px 32px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: #cbd5e1;
+            font-size: 15px;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #38bdf8;
+        }
+
+        /* =========================================================
+       HERO
+    ========================================================= */
+        .hero {
+            background: linear-gradient(135deg, #1e40af, #0ea5e9);
+            color: white;
+            text-align: center;
+            padding: 80px 20px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            /*
+            ANTES:
+                width: 620px;
+            DEPOIS:
+                max-width: 620px;
+            */
+            max-width: 620px;
+            margin: 0 auto 32px;
+            line-height: 1.7;
+            opacity: 0.9;
+        }
+
+        .btn {
+            background-color: #f59e0b;
+            color: #1e293b;
+            padding: 14px 32px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 16px;
+            display: inline-block;
+        }
+
+        /* =========================================================
+       LAYOUT PRINCIPAL
+    ========================================================= */
+        .page-wrapper {
+            /*
+            ANTES:
+                width: 1024px;
+            DEPOIS:
+                max-width: 1024px;
+                padding: 20px;
+            */
+            max-width: 1024px;
+            padding: 20px;
+
+            margin: 48px auto;
+            display: flex;
+            gap: 32px;
+        }
+
+        /* ANTES: sem media query em tablets e celulares, posts e sidebar ficavam lado a lado comprimidos, tornando o conteúdo ilegível */
+        /* DEPOIS: abaixo de 1050px, o layout vira coluna única com itens centralizados */
+        @media (max-width: 1050px) {
+            .page-wrapper {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* =========================================================
+       POSTS
+    ========================================================= */
+        .posts-area {
+            /*
+            ANTES:
+                width: 700px;
+            DEPOIS:
+                width: 100%;
+            */
+            width: 100%;
+        }
+
+        .section-heading {
+            font-size: 26px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 3px solid #0ea5e9;
+        }
+
+        .post-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            margin-bottom: 32px;
+            /*
+            ANTES: 
+
+            DEPOIS:
+                max-width: 100%;
+            */
+            max-width: 100%;
+        }
+
+        .post-card img {
+            height: 320px;
+            object-fit: cover;
+            display: block;
+            /*
+            ANTES:
+                width: 700px;
+            DEPOIS:
+                width: 100%;
+            */
+            width: 100%;
+        }
+
+        .post-body {
+            padding: 24px;
+        }
+
+        .post-tag {
+            background-color: #dbeafe;
+            color: #1d4ed8;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 99px;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .post-body h2 {
+            font-size: 22px;
+            color: #1e293b;
+            margin-bottom: 10px;
+        }
+
+        .post-body p {
+            color: #64748b;
+            line-height: 1.8;
+            margin-bottom: 16px;
+        }
+
+        .post-meta {
+            font-size: 13px;
+            color: #94a3b8;
+        }
+
+        /* =========================================================
+       SIDEBAR
+    ========================================================= */
+        .sidebar {
+            width: 292px;
+            flex-shrink: 0;
+        }
+
+        .widget {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            margin-bottom: 24px;
+        }
+
+        .widget h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 16px;
+        }
+
+        .widget ul {
+            list-style: none;
+        }
+
+        .widget ul li {
+            padding: 8px 0;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 14px;
+            color: #475569;
+        }
+
+        .widget ul li:last-child {
+            border-bottom: none;
+        }
+
+        /* =========================================================
+       GALERIA
+    ========================================================= */
+        .gallery-section {
+            background-color: #f1f5f9;
+            padding: 56px 20px;
+        }
+
+        .gallery-section h2 {
+            text-align: center;
+            font-size: 30px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 32px;
+        }
+
+        .gallery-grid {
+            display: flex;
+            gap: 16px;
+            margin: 0 auto;
+            /*
+            ANTES:
+                width: 1024px;
+            DEPOIS:
+                max-width: 1024px;
+                justify-content: center;
+                flex-wrap: wrap;
+            */
+            max-width: 1024px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .gallery-grid img {
+            border-radius: 10px;
+            /*
+            ANTES:
+                width: 330px;
+                height: 220px;
+                object-fit: cover;
+            DEPOIS:
+                max-width: 100%;
+                max-height: 220px;
+                object-fit: contain;
+            */
+            max-width: 100%;
+            max-height: 220px;
+            object-fit: contain;
+        }
+
+        /* =========================================================
+       NEWSLETTER
+    ========================================================= */
+        .newsletter {
+            background: linear-gradient(135deg, #7c3aed, #a855f7);
+            color: white;
+            text-align: center;
+            padding: 64px 20px;
+        }
+
+        .newsletter h2 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .newsletter p {
+            font-size: 16px;
+            opacity: 0.85;
+            margin-bottom: 28px;
+        }
+
+        .newsletter-form {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin: 0 auto;
+            /*
+            ANTES:
+                width: 560px;
+            DEPOIS:
+                width: 100%;
+            */
+            width: 100%;
+        }
+
+        .newsletter-form input {
+            /*
+            ANTES: 
+            
+            DEPOIS:
+                max-width: 200px;
+                width: 100%;
+                flex: 1;
+            */
+            max-width: 200px;
+            width: 100%;
+            flex: 1;
+            padding: 14px 18px;
+            border-radius: 8px;
+            border: none;
+            font-size: 15px;
+        }
+
+        .newsletter-form button {
+            background-color: #f59e0b;
+            color: #1e293b;
+            padding: 14px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        /* =========================================================
+       FOOTER
+    ========================================================= */
+        footer {
+            background-color: #0f172a;
+            color: #94a3b8;
+            padding: 48px 20px;
+        }
+
+        .footer-grid {
+            /*
+            ANTES:
+                display: flex;
+                gap: 40px;
+                width: 1024px;
+            DEPOIS:
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                justify-content: space-around;
+                flex-wrap: wrap;
+                max-width: 100%;
+            */
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 40px;
+            max-width: 100%;
+            margin: 0 auto 32px;
+        }
+
+        .footer-col {
+            /*
+            ANTES:
+                width: 280px;
+            DEPOIS:
+                word-wrap: break-word;
+            */
+            word-wrap: break-word;
+        }
+
+        .footer-col h3 {
+            color: white;
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .footer-col p,
+        .footer-col a {
+            font-size: 14px;
+            line-height: 2;
+            color: #94a3b8;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            font-size: 13px;
+            color: #475569;
+            border-top: 1px solid #1e293b;
+            padding-top: 24px;
+            /*
+            ANTES:
+                width: 1024px;
+                margin: 0 auto;
+            DEPOIS:
+                width: 100%;
+            */
+            width: 100%;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVEGAÇÃO -->
+    <nav>
+        <span class="nav-logo">TechBlog</span>
+        <ul class="nav-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Artigos</a></li>
+            <li><a href="#">Tutoriais</a></li>
+            <li><a href="#">Sobre</a></li>
+            <li><a href="#">Contato</a></li>
+        </ul>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <h1>Bem-vindo ao TechBlog</h1>
+        <p>Seu portal de notícias e tutoriais sobre tecnologia, programação e design web.</p>
+        <a href="#" class="btn">Ver todos os artigos</a>
+    </section>
+
+    <!-- CONTEÚDO PRINCIPAL + SIDEBAR -->
+    <div class="page-wrapper">
+
+        <!-- ÁREA DE POSTS -->
+        <section class="posts-area">
+            <h2 class="section-heading">Artigos Recentes</h2>
+
+            <article class="post-card">
+                <img src="https://images.pexels.com/photos/574071/pexels-photo-574071.jpeg"
+                    alt="Pessoa digitando código em notebook" />
+                <div class="post-body">
+                    <span class="post-tag">CSS</span>
+                    <h2>Guia Completo de CSS Grid Layout</h2>
+                    <p>
+                        O CSS Grid Layout revolucionou a forma como construímos layouts na web.
+                        Com ele, podemos criar estruturas bidimensionais complexas com muito menos código.
+                        Neste artigo, você aprenderá do básico ao avançado.
+                    </p>
+                    <div class="post-meta">Por João Tech &mdash; 10 mar. 2025</div>
+                </div>
+            </article>
+
+            <article class="post-card">
+                <img src="https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg"
+                    alt="Telas com interface de design" />
+                <div class="post-body">
+                    <span class="post-tag">Design</span>
+                    <h2>Mobile First: Por Que Começar pelos Celulares?</h2>
+                    <p>
+                        Mais de 60% do tráfego da web vem de dispositivos móveis.
+                        Entenda por que projetar pensando no mobile primeiro
+                        melhora a experiência do usuário e facilita a manutenção do código.
+                    </p>
+                    <div class="post-meta">Por João Tech &mdash; 5 mar. 2025</div>
+                </div>
+            </article>
+
+            <article class="post-card">
+                <img src="https://images.pexels.com/photos/1181271/pexels-photo-1181271.jpeg"
+                    alt="Equipe trabalhando em projeto" />
+                <div class="post-body">
+                    <span class="post-tag">JavaScript</span>
+                    <h2>Async/Await: Dominando o JavaScript Assíncrono</h2>
+                    <p>
+                        Esqueça o callback hell. Com async/await, lidar com operações assíncronas
+                        em JavaScript ficou muito mais legível e fácil de depurar. Veja exemplos práticos.
+                    </p>
+                    <div class="post-meta">Por João Tech &mdash; 28 fev. 2025</div>
+                </div>
+            </article>
+        </section>
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="widget">
+                <h3>Posts em Alta</h3>
+                <ul>
+                    <li>Flexbox vs Grid: qual usar?</li>
+                    <li>Variáveis CSS (Custom Properties)</li>
+                    <li>JavaScript ES2025 - Novidades</li>
+                    <li>Como usar o DevTools</li>
+                    <li>Acessibilidade na Web</li>
+                </ul>
+            </div>
+            <div class="widget">
+                <h3>Categorias</h3>
+                <ul>
+                    <li>CSS (14 artigos)</li>
+                    <li>JavaScript (9 artigos)</li>
+                    <li>HTML (6 artigos)</li>
+                    <li>Design (11 artigos)</li>
+                    <li>Ferramentas (4 artigos)</li>
+                </ul>
+            </div>
+            <div class="widget">
+                <h3>Sobre o Blog</h3>
+                <p style="font-size:14px;line-height:1.7;color:#64748b;">
+                    TechBlog é um espaço dedicado a desenvolvedores web que querem
+                    aprender e se manter atualizados com as melhores práticas do mercado.
+                </p>
+            </div>
+        </aside>
+
+    </div>
+
+    <!-- GALERIA -->
+    <section class="gallery-section">
+        <h2>Galeria de Projetos</h2>
+        <div class="gallery-grid">
+            <img src="https://images.pexels.com/photos/270557/pexels-photo-270557.jpeg" alt="Projeto 1" />
+            <img src="https://images.pexels.com/photos/1181244/pexels-photo-1181244.jpeg" alt="Projeto 2" />
+            <img src="https://images.pexels.com/photos/39284/macbook-apple-imac-computer-39284.jpeg" alt="Projeto 3" />
+        </div>
+    </section>
+
+    <!-- NEWSLETTER -->
+    <section class="newsletter">
+        <h2>Fique por dentro das novidades</h2>
+        <p>Assine nossa newsletter e receba os melhores artigos direto no seu e-mail.</p>
+        <div class="newsletter-form">
+            <input type="email" placeholder="seu@email.com" />
+            <button type="submit">Assinar</button>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h3>TechBlog</h3>
+                <p>Conteúdo de qualidade sobre desenvolvimento web para todos os níveis.</p>
+            </div>
+            <div class="footer-col">
+                <h3>Navegação</h3>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Artigos</a></li>
+                    <li><a href="#">Tutoriais</a></li>
+                    <li><a href="#">Contato</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Contato</h3>
+                <p>contato@techblog.dev</p>
+                <p>São Paulo, Brasil</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2025 TechBlog. Todos os direitos reservados.
+        </div>
+    </footer>
+
+</body>
+
+</html>

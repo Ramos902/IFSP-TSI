@@ -3,7 +3,6 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TechBlog - Notícias de Tecnologia</title>
     <style>
         /* =========================================================
@@ -31,18 +30,10 @@
         nav {
             background-color: #1e293b;
             padding: 0 40px;
-            height: auto;
-            padding: 15px;
+            height: 64px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 10px;
-        }
-        @media (max-width: 545px) {
-            nav{
-                justify-content: center;
-                flex-direction: column;
-            }
         }
 
         .nav-logo {
@@ -51,16 +42,12 @@
             font-weight: 700;
         }
 
-        
         .nav-links {
             display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
             list-style: none;
-            gap: 10px 32px;
+            gap: 32px;
         }
-        
-        
+
         .nav-links a {
             color: #cbd5e1;
             font-size: 15px;
@@ -89,7 +76,7 @@
 
         .hero p {
             font-size: 18px;
-            max-width: 620px;
+            width: 620px;
             margin: 0 auto 32px;
             line-height: 1.7;
             opacity: 0.9;
@@ -109,29 +96,17 @@
        LAYOUT PRINCIPAL
     ========================================================= */
         .page-wrapper {
-            max-width: 1024px;
+            width: 1024px;
             margin: 48px auto;
             display: flex;
-            
             gap: 32px;
-            padding: 20px;
-        }
-
-        /*ADICIONADO*/
-        @media (max-width: 1050px) {
-            .page-wrapper {
-                flex-direction: column;
-                align-items: center;
-            }
         }
 
         /* =========================================================
        POSTS
     ========================================================= */
-        
-
         .posts-area {
-            width: 100%;
+            width: 700px;
         }
 
         .section-heading {
@@ -144,7 +119,6 @@
         }
 
         .post-card {
-            max-width: 100%;
             background: white;
             border-radius: 12px;
             overflow: hidden;
@@ -153,7 +127,7 @@
         }
 
         .post-card img {
-            width: 100%;
+            width: 700px;
             height: 320px;
             object-fit: cover;
             display: block;
@@ -247,17 +221,15 @@
 
         .gallery-grid {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
             gap: 16px;
-            max-width: 1024px;
+            width: 1024px;
             margin: 0 auto;
         }
 
         .gallery-grid img {
-            max-width: 100%;
-            max-height: 220px;
-            object-fit: contain;
+            width: 330px;
+            height: 220px;
+            object-fit: cover;
             border-radius: 10px;
         }
 
@@ -287,13 +259,11 @@
             display: flex;
             justify-content: center;
             gap: 12px;
-            width: 100%;
+            width: 560px;
             margin: 0 auto;
         }
 
         .newsletter-form input {
-            max-width: 200px;
-            width: 100%;
             flex: 1;
             padding: 14px 18px;
             border-radius: 8px;
@@ -322,18 +292,14 @@
         }
 
         .footer-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            justify-content: space-around;
-            flex-wrap: wrap;
+            display: flex;
             gap: 40px;
-            max-width: 100%;
+            width: 1024px;
             margin: 0 auto 32px;
         }
 
         .footer-col {
             width: 280px;
-            word-wrap: break-word;
         }
 
         .footer-col h3 {
@@ -360,7 +326,7 @@
             color: #475569;
             border-top: 1px solid #1e293b;
             padding-top: 24px;
-            width: 100%;
+            width: 1024px;
             margin: 0 auto;
         }
     </style>
