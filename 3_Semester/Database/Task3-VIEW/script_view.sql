@@ -60,4 +60,92 @@ JOIN produto p ON p.idproduto = ip.idproduto
 WHERE pe.situacao IN ('Em Processamento', 'Processando', 'Pendente', 'Confirmado');
 
 /*Questão 06 - Identificar produtos populares.*/
+CREATE VIEW view_produtos_populares AS
+SELECT
+    p.idproduto,
+    p.nome AS produto,
+    c.nome AS categoria,
+    f.nome AS fabricante,
+    SUM(ip.quantidade_venda) AS total_vendido,
+    COUNT(DISTINCT ip.pedido_codigo) AS total_pedidos,
+    SUM(ip.quantidade_venda * ip.preco_venda) AS receita_total
+FROM produto p
+JOIN item_pedido ip ON ip.idproduto = p.idproduto
+JOIN pedido pe ON pe.pedido_codigo = ip.pedido_codigo
+JOIN categoria c ON c.idcategoria = p.idcategoria
+JOIN fabricante f ON f.idfabricante = p.idfabricante
+WHERE pe.situacao NOT IN ('Cancelado')
+GROUP BY p.idproduto, p.nome, c.nome, f.nome
+ORDER BY total_vendido DESC;
 
+
+/* Questão 07 - Analisar preferências de pagament*/
+CREATE VIEW view_preferencias_pagamento AS
+SELECT
+    fp.idfrmpagto,
+    fp.nome AS forma_pagamento,
+    fp.taxa_juros,
+    COUNT(pe.pedido_codigo) AS total_pedidos,
+    SUM(pe.VLR_TOTAL) AS valor_total_movimentado,
+    AVG(pe.VLR_TOTAL) AS ticket_medio,
+    COUNT(DISTINCT pe.idcliente) AS clientes_distintos
+FROM forma_pagto fp
+LEFT JOIN pedido pe ON pe.idfrmpagto = fp.idfrmpagto
+    AND pe.situacao NOT IN ('Cancelado')
+GROUP BY fp.idfrmpagto, fp.nome, fp.taxa_juros
+ORDER BY total_pedidos DESC;
+
+/* Questão 08 - Facilitar envio de marketing/logística.*/
+
+CREATE VIEW view_dados_marketing_logistica AS
+SELECT
+    c.idCliente,
+    c.nome AS cliente,
+    c.nome_usuario,
+    c.e_mail_cliente,
+    c.telefone_celular,
+    e.logradouro,
+    e.complemento,
+    e.bairro,
+    e.cidade,
+    e.uf,
+    e.cep,
+    COUNT(pe.pedido_codigo) AS total_pedidos,
+    SUM(pe.VLR_TOTAL) AS valor_total_gasto,
+    MAX(pe.data_hora) AS ultimo_pedido
+FROM cliente c
+JOIN pedido pe ON pe.idcliente = c.idCliente
+JOIN endereco e ON e.idendereco = pe.idendereco
+WHERE pe.situacao NOT IN ('Cancelado')
+GROUP BY
+    c.idCliente, c.nome, c.nome_usuario, c.e_mail_cliente, c.telefone_celular,
+    e.logradouro, e.complemento, e.bairro, e.cidade, e.uf, e.cep
+ORDER BY valor_total_gasto DESC;
+
+/* Questão 09 - Problema de Segurança
+    -- Nenhum usuário do banco poderá ter acesso direto as tabelas exceto o ‘root’. 
+    -- Todos os usuários devem ter apenas acesso a view.
+*/
+
+/*USUARIO EXEMPLO*/
+DROP USER IF EXISTS 'vendedor'@'%';
+CREATE USER 'vendedor'@'%' IDENTIFIED BY 'senha123';
+
+/* Conceder acesso apenas às views para vendedor */
+GRANT SELECT ON loja_web.vw_categoria TO 'vendedor'@'%';
+GRANT SELECT ON loja_web.vw_cliente TO 'vendedor'@'%';
+GRANT SELECT ON loja_web.vw_endereco TO 'vendedor'@'%';
+GRANT SELECT ON loja_web.vw_fabricante TO 'vendedor'@'%';
+GRANT SELECT ON loja_web.vw_forma_pagto TO 'vendedor'@'%';
+GRANT SELECT ON loja_web.vw_funcionario TO 'vendedor'@'%';
+GRANT SELECT ON loja_web.vw_imagens TO 'vendedor'@'%';
+GRANT SELECT ON loja_web.vw_item_pedido TO 'vendedor'@'%';
+GRANT SELECT ON loja_web.vw_pedido TO 'vendedor'@'%';
+GRANT SELECT ON loja_web.vw_produto TO 'vendedor'@'%';
+GRANT SELECT ON loja_web.vw_secure_cliente TO 'vendedor'@'%';
+GRANT SELECT ON loja_web.view_produtos_per_categoria TO 'vendedor'@'%';
+GRANT SELECT ON loja_web.view_pedidos_nao_processados TO 'vendedor'@'%';
+GRANT SELECT ON loja_web.view_produtos_populares TO 'vendedor'@'%';
+GRANT SELECT ON loja_web.view_preferencias_pagamento TO 'vendedor'@'%';
+GRANT SELECT ON loja_web.view_dados_marketing_logistica TO 'vendedor'@'%';
+FLUSH PRIVILEGES;
