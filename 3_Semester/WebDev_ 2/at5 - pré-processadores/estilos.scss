@@ -1,0 +1,187 @@
+@use "variables.scss";
+
+@mixin button-style($color: #fff, $background: transparent) {
+    background: $background;
+    color: $color;
+    padding: 12px 24px;
+    border-radius: 8px;
+    text-decoration: none;
+    /* VAR */
+    font-weight: 600;
+}
+
+%link-style{
+    text-decoration: none;
+    color: #94a3b8;
+}
+
+%font-padrao{
+    font-weight: 600;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    /* VAR */
+    background: $background;
+    color: $text-color;
+}
+
+/* TOPBAR */
+
+.topbar {
+    background: $blue-color;
+    /* VAR */
+    padding: 16px 32px;
+    display: flex;
+    /* VAR */
+    justify-content: space-between;
+    align-items: center;
+
+    .brand {
+        color: $white-color;
+        /* VAR */
+        font-weight: 600;
+        font-size: 1.1rem;
+    }
+
+    .nav {
+        display: flex;
+        /* VAR */
+        gap: 24px;
+
+        a {
+            /* VAR */
+            @extend %text-style;
+
+            /* VAR */
+            :hover {
+                text-decoration: underline;
+            }
+        }
+    }
+}
+
+/* HERO */
+
+.hero {
+    padding: 64px 32px;
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+.hero .name {
+    font-size: 2.5rem;
+    color: $blue-color;
+    /* VAR */
+    margin-bottom: 8px;
+}
+
+.hero .role {
+    font-size: 1.1rem;
+    color: #64748b;
+    margin-bottom: 16px;
+}
+
+.hero .bio {
+    line-height: 1.7;
+    margin-bottom: 32px;
+}
+
+.hero .actions {
+    display: flex;
+    /* VAR */
+    gap: 16px;
+}
+
+/* BOTOES */
+
+.btn-primary {
+    /* VAR */
+    @include button-style($white-color, $blue-color);
+}
+
+.btn-secondary {
+    /* VAR */
+    @include button-style($blue-color, transparent);
+    border: 2px solid $blue-color;
+}
+
+/* HABILIDADES */
+
+.skills {
+    max-width: 720px;
+    margin: 0 auto 64px;
+    padding: 0 32px;
+}
+
+.skills .heading {
+    font-size: 1.4rem;
+    color: $text-color;
+    margin-bottom: 24px;
+}
+
+.skills .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+/* CARDS */
+
+.card {
+    background: $white-color;
+    /* VAR */
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 24px;
+}
+
+.card .title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: $text-color;
+    margin-bottom: 8px;
+}
+
+.card .desc {
+    font-size: 0.9rem;
+    color: #64748b;
+    margin-bottom: 16px;
+    line-height: 1.5;
+}
+
+.card .tag {
+    display: inline-block;
+    background: $background-2;
+    color: $blue-color;
+    /* VAR */
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+/* FOOTER */
+
+.footer {
+    background: $text-color;
+    padding: 24px 32px;
+    text-align: center;
+}
+
+.footer .links a {
+    @extend %text-style;
+    /* VAR */
+    margin: 0 12px;
+}
+
+.footer .links a:hover {
+    color: $white-color;
+    /* VAR */
+}
